@@ -250,12 +250,15 @@ void interfered_example() {
 // Make your own autonomous functions here!
 // . . .
 
-// void roller_side(){
-  // intake.move_velocity(-127);
-  // pros::delay(500);
-  // chassis.set_drive_pid(12, 120);
-  // chassis.wait_drive();
-  // chassis.set_turn_pid(-135.0, 110);
-  // chassis.set_drive_pid(67.88, 120, true, true);
+void roller_side(){ // normal auton
+  intake.move_velocity(-127);
+  pros::delay(500);
+  chassis.set_drive_pid(6, 120);
+  chassis.wait_drive();
+  chassis.set_turn_pid(-135.0, 110);
+  chassis.set_drive_pid(30, 120, true, true);
+}
 
-//}
+void skill_issue() { // progammers skills
+
+}
