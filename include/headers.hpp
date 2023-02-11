@@ -9,6 +9,6 @@ static pros::ADIDigitalOut indexerSingle('G', false); // single
 //flywheel
 static pros::Motor flywheel(1, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES);
 
-// //expansion
-// static pros::ADIDigitalOut piston1('A', false);
-// static pros::ADIDigitalOut piston2('B', false);
+// expansion(s)
+static pros::ADIDigitalOut expansion('A', false);
+// static pros::ADIDigitalOut expansion2('B', false); // this is if you decide to use a second solenoid for the other piston
