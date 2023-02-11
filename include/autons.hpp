@@ -17,4 +17,8 @@ void one_mogo_constants();
 void two_mogo_constants();
 void exit_condition_defaults();
 void modified_exit_condition();
-void roller_side();
+
+void roller_side_normal();
+void roller_side_single();
+void not_roller_side();
+void skills();

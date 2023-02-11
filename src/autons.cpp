@@ -330,6 +330,24 @@ void roller_side_single() { // normal auton but with single indexer
   indexerSingle.set_value(false);
 }
 
+void not_roller_side() { // normal auton but for if you start on the side thats to the left of the roller
+  // what this does is
+  // 1. get roller (should be started FACING the roller)
+
+  chassis.set_drive_pid(20, 110);
+  chassis.wait_drive();
+  chassis.set_turn_pid(90.0, 100);
+  chassis.wait_drive();
+  
+  intake.move_velocity(-127); // do rollers
+  chassis.set_drive_pid(2, 100); // move forward while intaking to keep contact with rollers
+
+  pros::delay(500);
+
+  intake.brake();
+  chassis.set_drive_pid(0, 100); // not sure if the robot will get stuck moving into the roller, so this is to hopefully stop the drivetrain
+}
+
 void skills() { // programmers skills
   // what this does is
   // 1. get roller (should be started right in front of roller)
