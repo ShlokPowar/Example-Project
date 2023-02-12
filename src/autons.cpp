@@ -8,8 +8,8 @@
 /////
 
 
-const int DRIVE_SPEED = 110; // This is 110/127 (around 87% of max speed).  We don't suggest making this 127.
-                             // If this is 127 and the robot tries to heading correct, it's only correcting by
+const int DRIVE_SPEED = 110; // This is 110/117 (around 87% of max speed).  We don't suggest making this 117.
+                             // If this is 117 and the robot tries to heading correct, it's only correcting by
                              // making one side slower.  When this is 87%, it's correcting by making one side
                              // faster and one side slower, giving better heading correction.
 const int TURN_SPEED  = 90;
@@ -81,10 +81,10 @@ void drive_example() {
   chassis.set_drive_pid(24, DRIVE_SPEED, true);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(-12, DRIVE_SPEED);
+  chassis.set_drive_pid(-11, DRIVE_SPEED);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(-12, DRIVE_SPEED);
+  chassis.set_drive_pid(-11, DRIVE_SPEED);
   chassis.wait_drive();
 }
 
@@ -176,7 +176,7 @@ void swing_example() {
   chassis.wait_drive();
 
   chassis.set_drive_pid(24, DRIVE_SPEED, true);
-  chassis.wait_until(12);
+  chassis.wait_until(11);
 
   chassis.set_swing_pid(ez::RIGHT_SWING, 0, SWING_SPEED);
   chassis.wait_drive();
@@ -213,7 +213,7 @@ void tug (int attempts) {
   for (int i=0; i<attempts-1; i++) {
     // Attempt to drive backwards
     printf("i - %i", i);
-    chassis.set_drive_pid(-12, 127);
+    chassis.set_drive_pid(-11, 117);
     chassis.wait_drive();
 
     // If failsafed...
@@ -258,30 +258,30 @@ void roller_side_normal() { // normal auton but with normal indexer
   //
   // should have one disk in storage and the other in intake
 
-  intake.move_velocity(-127); // do rollers
+  intake.move_voltage(-12000); // do rollers
   chassis.set_drive_pid(2, 100); // move forward while intaking to keep contact with rollers
   
   pros::delay(500);
 
   intake.brake();
-  chassis.set_drive_pid(0, 100); // not sure if the robot will get stuck moving into the roller, so this is to hopefully stop the drivetrain
+  chassis.wait_drive();
 
-  chassis.set_drive_pid(-6, 120); // go back
+  chassis.set_drive_pid(-6, 110); // go back
   chassis.wait_drive();
 
   chassis.set_turn_pid(45.0, 110); // turn 45 deg clockwise so the shooter faces the center of field
                                    // if intake faces center of field then change this to -135 deg
-  chassis.set_drive_pid(-30, 120, true, true); // drive to center
+  chassis.set_drive_pid(-30, 110, true, true); // drive to center
 
   chassis.set_turn_pid(-90.0, 110); // turn toward goal
 
-  flywheel.move_voltage(11000); 
+  flywheel.move_voltage(12000); 
 
   indexer.set_value(true); // first disk
   pros::delay(500);
   indexer.set_value(false);
 
-  intake.move_velocity(-127); // move up second disk into storage
+  intake.move_voltage(-12000); // move up second disk into storage
 
   pros::delay(2500); // adjust if needed (its in ms)
 
@@ -298,22 +298,22 @@ void roller_side_single() { // normal auton but with single indexer
   //
   // should have one disk in storage and the other in intake
 
-  intake.move_velocity(-127); // do rollers
-  chassis.set_drive_pid(2, 100); // move forward while intaking to keep contact with rollers
+  intake.move_voltage(-12000); // do roller
+  chassis.set_drive_pid(2, 100); // engage roller
 
   pros::delay(500);
 
   intake.brake();
-  chassis.set_drive_pid(0, 100); // not sure if the robot will get stuck moving into the roller, so this is to hopefully stop the drivetrain
+  chassis.wait_drive();
 
-  chassis.set_drive_pid(-6, 120); // go back
+  chassis.set_drive_pid(-6, 110); // go back
   chassis.wait_drive();
 
   chassis.set_turn_pid(45.0, 110); // turn 45 deg clockwise so the shooter faces the center of field
                                    // if intake faces center of field then change this to -135 deg
-  chassis.set_drive_pid(-30, 120, true, true); // drive to center
+  chassis.set_drive_pid(-30, 110, true, true); // drive to center
 
-  chassis.set_turn_pid(-90.0, 110); // turn toward goal
+  chassis.set_turn_pid(-45.0, 110); // turn toward goal
 
   flywheel.move_voltage(12000); 
 
@@ -321,7 +321,7 @@ void roller_side_single() { // normal auton but with single indexer
   pros::delay(500);
   indexerSingle.set_value(false);
 
-  intake.move_velocity(-127); // move up second disk into storage
+  intake.move_voltage(-12000); // move up second disk into storage
 
   pros::delay(2500); // adjust if needed (its in ms)
 
@@ -339,13 +339,13 @@ void not_roller_side() { // normal auton but for if you start on the side thats 
   chassis.set_turn_pid(90.0, 100);
   chassis.wait_drive();
   
-  intake.move_velocity(-127); // do rollers
+  intake.move_voltage(-12000); // do rollers
   chassis.set_drive_pid(2, 100); // move forward while intaking to keep contact with rollers
 
   pros::delay(500);
 
   intake.brake();
-  chassis.set_drive_pid(0, 100); // not sure if the robot will get stuck moving into the roller, so this is to hopefully stop the drivetrain
+  chassis.wait_drive();
 }
 
 void skills() { // programmers skills
@@ -369,42 +369,42 @@ void skills() { // programmers skills
   // entirety of step 4
 
   // Step 1
-  intake.move_velocity(-127); // do roller 1
+  intake.move_voltage(-12000); // do roller 1
   chassis.set_drive_pid(2, 100); // move forward while intaking to keep contact with rollers
 
   pros::delay(500);
 
   intake.brake();
-  chassis.set_drive_pid(0, 100); // not sure if the robot will get stuck moving into the roller, so this is to hopefully stop the drivetrain
+  chassis.wait_drive();
 
   // Step 2
-  chassis.set_drive_pid(-12, 120); // go back
+  chassis.set_drive_pid(-11.5, 110); // go back
                                    // should be aligned with the second rolelr
   chassis.wait_drive();
   chassis.set_turn_pid(90.0, 110); // should be facing second roller
   chassis.wait_drive();
-  chassis.set_drive_pid(12, 120); // engage roller
+  chassis.set_drive_pid(11, 110); // engage roller
   chassis.wait_drive();
   
-  intake.move_velocity(-127); // do roller 2
+  intake.move_voltage(-12000); // do roller 2
   chassis.set_drive_pid(2, 100); // move forward while intaking to keep contact with rollers
 
   pros::delay(500);
 
   intake.brake();
-  chassis.set_drive_pid(0, 100); // not sure if the robot will get stuck moving into the roller, so this is to hopefully stop the drivetrain
+  chassis.wait_drive();
 
   // Step 3
-  chassis.set_drive_pid(-12, 120); // go back
+  chassis.set_drive_pid(-11, 110); // go back
   chassis.wait_drive();
-  chassis.set_turn_pid(-45.0, 110); // turn with shooter facing center
+  chassis.set_turn_pid(45.0, 110); // turn with shooter facing center
                                     // if the intake is facing center then change this to -135 deg
   
   chassis.wait_drive();
   
-  chassis.set_drive_pid(-15, 120); // drive to center
+  chassis.set_drive_pid(-23, 110); // drive to center
   chassis.wait_drive();
-  chassis.set_turn_pid(-90.0, 110); // turn toward goal
+  chassis.set_turn_pid(-45.0, 110); // turn toward goal
   chassis.wait_drive();
 
   flywheel.move_voltage(12000);
@@ -415,7 +415,7 @@ void skills() { // programmers skills
   pros::delay(500);
   indexerSingle.set_value(false);
 
-  intake.move_velocity(-127); // move up second disk into storage
+  intake.move_voltage(-12000); // move up second disk into storage
 
   pros::delay(2500); // adjust if needed (its in ms)
 
@@ -424,44 +424,47 @@ void skills() { // programmers skills
   indexerSingle.set_value(false);
 
   intake.brake();
+  flywheel.brake();
 
   // Step 4
-  chassis.set_turn_pid(-90.0, 110); // turn with intake facing other two rollers
+  chassis.set_turn_pid(-135.0, 110); // turn with intake facing other two rollers
   chassis.wait_drive();
-  chassis.set_drive_pid(10, 120);
-  chassis.wait_drive();
-
-  chassis.set_turn_pid(45, 110); // doing the right side roller first
-  chassis.wait_drive();
-  chassis.set_drive_pid(12, 100); // engage roller
+  chassis.set_drive_pid(27, 110);
   chassis.wait_drive();
 
-  intake.move_velocity(-127); // do roller 3
+  chassis.set_turn_pid(-90, 110); // doing the right side roller first
+  chassis.wait_drive();
+  chassis.set_drive_pid(11, 100); // engage roller
+  chassis.wait_drive();
+
+  intake.move_voltage(-12000); // do roller 3
   chassis.set_drive_pid(2, 100); // move forward while intaking to keep contact with rollers
 
   pros::delay(500);
 
   intake.brake();
-  chassis.set_drive_pid(0, 100); // not sure if the robot will get stuck moving into the roller, so this is to hopefully stop the drivetrain
-
-  chassis.set_drive_pid(-12, 120);
-  chassis.wait_drive();
-  chassis.set_turn_pid(-90, 110); // doing last roller
-  chassis.wait_drive();
-  chassis.set_drive_pid(12, 100); // engage roller
   chassis.wait_drive();
 
-  intake.move_velocity(-127); // do roller 4
+  chassis.set_drive_pid(-10, 110);
+  chassis.wait_drive();
+  chassis.set_turn_pid(-180, 110); // doing last roller
+  chassis.wait_drive();
+  chassis.set_drive_pid(9, 100); // engage roller
+  chassis.wait_drive();
+
+  intake.move_voltage(-12000); // do roller 4
   chassis.set_drive_pid(2, 100); // move forward while intaking to keep contact with rollers
 
   pros::delay(500);
 
   intake.brake();
-  chassis.set_drive_pid(0, 100); // not sure if the robot will get stuck moving into the roller, so this is to hopefully stop the drivetrain
-
-  chassis.set_drive_pid(-90, 110);
   chassis.wait_drive();
-  chassis.set_turn_pid(45, 110);
+
+  chassis.set_drive_pid(-10, 110);
+  chassis.wait_drive();
+  chassis.set_turn_pid(-135, 110);
+  chassis.wait_drive();
+  chassis.set_drive_pid(5, 110);
 
   chassis.wait_drive();
 
