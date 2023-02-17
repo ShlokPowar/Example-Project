@@ -502,21 +502,21 @@ void test_skills() { // programmers skills but the test version
 
   chassis.set_drive_pid(-9, 120);
   chassis.wait_drive();
-  chassis.set_turn_pid(-10, 100);
+  chassis.set_turn_pid(-8.5, 100);
   chassis.wait_drive();
 
-  flywheel.move_voltage(12000);
+  flywheel.move_voltage(10550);
 
-  pros::delay(1500);
+  pros::delay(1600);
 
   indexerSingle.set_value(true);
-  pros::delay(5);
+  pros::delay(100);
   indexerSingle.set_value(false);
-  pros::delay(450);
+  pros::delay(750);
   indexerSingle.set_value(true);
-  pros::delay(5);
+  pros::delay(100);
   indexerSingle.set_value(false);
-  pros::delay(450);
+  pros::delay(750);
 
   flywheel.brake();
 
@@ -539,28 +539,31 @@ void test_skills() { // programmers skills but the test version
 
   // Step 4: move to center while picking up disks
 
-  chassis.set_drive_pid(-13, 120);
+  chassis.set_drive_pid(-6, 120);
   chassis.wait_drive();
   chassis.set_turn_pid(225, 120);
   chassis.wait_drive();
   
   intake.move_voltage(12000);
 
-  chassis.set_drive_pid(21.5, 85);
+  chassis.set_drive_pid(23, 85);
   chassis.wait_drive();
-  chassis.set_turn_pid(135, 100);
+  chassis.set_turn_pid(-43, 100);
   chassis.wait_drive();
 
-  pros::delay(1000);
+  pros::delay(900);
   
   intake.brake();
 
+  flywheel.move_velocity(9750);
+  pros::delay(1500);
+
   indexerSingle.set_value(true);
-  pros::delay(5);
+  pros::delay(100);
   indexerSingle.set_value(false);
-  pros::delay(450);
+  pros::delay(750);
   indexerSingle.set_value(true);
-  pros::delay(5);
+  pros::delay(100);
   indexerSingle.set_value(false);
-  pros::delay(450);
+  pros::delay(750);
 }
