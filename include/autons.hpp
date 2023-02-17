@@ -22,3 +22,4 @@ void roller_side_normal();
 void roller_side_single();
 void not_roller_side();
 void skills();
+void test_skills();
