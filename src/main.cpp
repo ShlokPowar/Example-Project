@@ -80,7 +80,8 @@ void initialize() {
     // Auton("Roller side auton (normal indexer)\n\n", roller_side_normal),
     // Auton("Roller side auton (single indexer)\n\n", roller_side_single),
     // Auton("Not roller side auton\n\n", not_roller_side),
-    Auton("Skills\n\n", skills)
+    // Auton("Skills\n\n", skills),
+    Auton("Skills (test)\n\n", test_skills)
   });
 
   // Initialize chassis and auton selector

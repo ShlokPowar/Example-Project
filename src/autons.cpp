@@ -258,7 +258,7 @@ void roller_side_normal() { // normal auton but with normal indexer
   //
   // should have one disk in storage and the other in intake
 
-  intake.move_voltage(-12000); // do rollers
+  intake.move_voltage(12000); // do rollers
   chassis.set_drive_pid(2, 100); // move forward while intaking to keep contact with rollers
   
   pros::delay(500);
@@ -281,7 +281,7 @@ void roller_side_normal() { // normal auton but with normal indexer
   pros::delay(500);
   indexer.set_value(false);
 
-  intake.move_voltage(-12000); // move up second disk into storage
+  intake.move_voltage(12000); // move up second disk into storage
 
   pros::delay(2500); // adjust if needed (its in ms)
 
@@ -298,7 +298,7 @@ void roller_side_single() { // normal auton but with single indexer
   //
   // should have one disk in storage and the other in intake
 
-  intake.move_voltage(-12000); // do roller
+  intake.move_voltage(12000); // do roller
   chassis.set_drive_pid(2, 100); // engage roller
 
   pros::delay(500);
@@ -321,7 +321,7 @@ void roller_side_single() { // normal auton but with single indexer
   pros::delay(500);
   indexerSingle.set_value(false);
 
-  intake.move_voltage(-12000); // move up second disk into storage
+  intake.move_voltage(12000); // move up second disk into storage
 
   pros::delay(2500); // adjust if needed (its in ms)
 
@@ -339,7 +339,7 @@ void not_roller_side() { // normal auton but for if you start on the side thats 
   chassis.set_turn_pid(90.0, 100);
   chassis.wait_drive();
   
-  intake.move_voltage(-12000); // do rollers
+  intake.move_voltage(12000); // do rollers
   chassis.set_drive_pid(2, 100); // move forward while intaking to keep contact with rollers
 
   pros::delay(500);
@@ -352,7 +352,7 @@ void skills() { // programmers skills
   // what this does is
   // 1. get roller (should be started right in front of roller)
   // 2. get second roller
-  // 3. shoot two disks INDIVIDUALLY
+  // 3. shoot disks
   // 4. get other two rollers
   // 5. expand
   // 
@@ -369,7 +369,7 @@ void skills() { // programmers skills
   // entirety of step 4
 
   // Step 1
-  intake.move_voltage(-12000); // do roller 1
+  intake.move_voltage(12000); // do roller 1
   chassis.set_drive_pid(2, 100); // move forward while intaking to keep contact with rollers
 
   pros::delay(500);
@@ -378,7 +378,7 @@ void skills() { // programmers skills
   chassis.wait_drive();
 
   // Step 2
-  chassis.set_drive_pid(-11.5, 110); // go back
+  chassis.set_drive_pid(-9, 110); // go back
                                    // should be aligned with the second rolelr
   chassis.wait_drive();
   chassis.set_turn_pid(90.0, 110); // should be facing second roller
@@ -386,7 +386,7 @@ void skills() { // programmers skills
   chassis.set_drive_pid(11, 110); // engage roller
   chassis.wait_drive();
   
-  intake.move_voltage(-12000); // do roller 2
+  intake.move_voltage(12000); // do roller 2
   chassis.set_drive_pid(2, 100); // move forward while intaking to keep contact with rollers
 
   pros::delay(500);
@@ -437,7 +437,7 @@ void skills() { // programmers skills
   chassis.set_drive_pid(11, 100); // engage roller
   chassis.wait_drive();
 
-  intake.move_voltage(-12000); // do roller 3
+  intake.move_voltage(12000); // do roller 3
   chassis.set_drive_pid(2, 100); // move forward while intaking to keep contact with rollers
 
   pros::delay(500);
@@ -452,7 +452,7 @@ void skills() { // programmers skills
   chassis.set_drive_pid(9, 100); // engage roller
   chassis.wait_drive();
 
-  intake.move_voltage(-12000); // do roller 4
+  intake.move_voltage(12000); // do roller 4
   chassis.set_drive_pid(2, 100); // move forward while intaking to keep contact with rollers
 
   pros::delay(500);
@@ -471,4 +471,96 @@ void skills() { // programmers skills
   // Step 5
   expansion.set_value(true);
   // expansion2.set_value(true); // this is if you decide to use a second solenoid for the other piston
+}
+
+void test_skills() { // programmers skills but the test version
+  // what this does is
+  // 1. get roller (should be started right in front of roller)
+  // 2. shoot two disks INDIVIDUALLY
+  // 3. get second roller
+  // 4. move to center while picking up disks
+  // 5. shoot picked up disks
+  // 6. get line of disks to the front left of robot
+  // 7. shoot picked up disks
+  // 8. get line of disks on the other
+  // 6. head to other two rollers while picking up disks
+  // 7. shoot disks
+  // 8. get other two rollers
+  // 9. expand
+
+  // Step 1: get roller
+
+  intake.move_voltage(12000); // do roller 1
+  chassis.set_drive_pid(2, 100); // engage roller
+
+  pros::delay(500);
+
+  intake.brake();
+  chassis.wait_drive();
+
+  // Step 2: shoot two disks
+
+  chassis.set_drive_pid(-9, 120);
+  chassis.wait_drive();
+  chassis.set_turn_pid(-10, 100);
+  chassis.wait_drive();
+
+  flywheel.move_voltage(12000);
+
+  pros::delay(1500);
+
+  indexerSingle.set_value(true);
+  pros::delay(5);
+  indexerSingle.set_value(false);
+  pros::delay(450);
+  indexerSingle.set_value(true);
+  pros::delay(5);
+  indexerSingle.set_value(false);
+  pros::delay(450);
+
+  flywheel.brake();
+
+  pros::delay(100);
+
+  // Step 3: get second roller
+
+  chassis.set_turn_pid(90,110);
+  chassis.wait_drive();
+  chassis.set_drive_pid(8, 120);
+  chassis.wait_drive();
+
+  intake.move_voltage(12000); // do roller
+  chassis.set_drive_pid(2, 100); // engage roller
+
+  pros::delay(500);
+
+  intake.brake();
+  chassis.wait_drive();
+
+  // Step 4: move to center while picking up disks
+
+  chassis.set_drive_pid(-13, 120);
+  chassis.wait_drive();
+  chassis.set_turn_pid(225, 120);
+  chassis.wait_drive();
+  
+  intake.move_voltage(12000);
+
+  chassis.set_drive_pid(21.5, 85);
+  chassis.wait_drive();
+  chassis.set_turn_pid(135, 100);
+  chassis.wait_drive();
+
+  pros::delay(1000);
+  
+  intake.brake();
+
+  indexerSingle.set_value(true);
+  pros::delay(5);
+  indexerSingle.set_value(false);
+  pros::delay(450);
+  indexerSingle.set_value(true);
+  pros::delay(5);
+  indexerSingle.set_value(false);
+  pros::delay(450);
 }
