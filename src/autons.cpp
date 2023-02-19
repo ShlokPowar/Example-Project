@@ -505,9 +505,9 @@ void test_skills() { // programmers skills but the test version
   chassis.set_turn_pid(-8.5, 100);
   chassis.wait_drive();
 
-  flywheel.move_voltage(10550);
+  flywheel.move_voltage(10600);
 
-  pros::delay(1600);
+  pros::delay(1650);
 
   indexerSingle.set_value(true);
   pros::delay(100);
@@ -529,7 +529,7 @@ void test_skills() { // programmers skills but the test version
   chassis.set_drive_pid(8, 120);
   chassis.wait_drive();
 
-  intake.move_voltage(12000); // do roller
+  intake.move_voltage(10000); // do roller
   chassis.set_drive_pid(2, 100); // engage roller
 
   pros::delay(500);
@@ -539,23 +539,25 @@ void test_skills() { // programmers skills but the test version
 
   // Step 4: move to center while picking up disks
 
-  chassis.set_drive_pid(-6, 120);
+  chassis.set_drive_pid(-8.25, 120);
   chassis.wait_drive();
   chassis.set_turn_pid(225, 120);
   chassis.wait_drive();
   
   intake.move_voltage(12000);
 
-  chassis.set_drive_pid(23, 85);
+  chassis.set_drive_pid(27, 85);
   chassis.wait_drive();
-  chassis.set_turn_pid(-43, 100);
+  chassis.set_turn_pid(335, 100);
+  chassis.wait_drive();
+  chassis.set_drive_pid(3, 85);
   chassis.wait_drive();
 
-  pros::delay(900);
+  pros::delay(1200);
   
   intake.brake();
 
-  flywheel.move_velocity(9750);
+  flywheel.move_velocity(4700);
   pros::delay(1500);
 
   indexerSingle.set_value(true);
@@ -566,4 +568,19 @@ void test_skills() { // programmers skills but the test version
   pros::delay(100);
   indexerSingle.set_value(false);
   pros::delay(750);
+
+  // Step 6: get line of disks to the front left of robot
+
+  chassis.set_turn_pid(135, 80);
+  chassis.wait_drive();
+  intake.move_voltage(12000);
+  chassis.set_drive_pid(9, 110);
+  chassis.wait_drive();
+  pros::delay(1000);
+  chassis.set_turn_pid(47, 80);
+  chassis.wait_drive();
+  chassis.set_drive_pid(15, 80);
+  chassis.wait_drive();
+  pros::delay(2000);
+  intake.brake();
 }
