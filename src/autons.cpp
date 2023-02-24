@@ -482,11 +482,12 @@ void test_skills() { // programmers skills but the test version
   // 5. shoot picked up disks
   // 6. get line of disks to the front left of robot
   // 7. shoot picked up disks
-  // 8. get line of disks on the other
-  // 6. head to other two rollers while picking up disks
-  // 7. shoot disks
-  // 8. get other two rollers
-  // 9. expand
+  // 8. get line of disks on the other side
+  // 9. shoot picked up disks
+  // 10. head to other two rollers while picking up disks
+  // 11. shoot disks
+  // 12. get other two rollers
+  // 13. expand
 
   // Step 1: get roller
 
@@ -505,18 +506,18 @@ void test_skills() { // programmers skills but the test version
   chassis.set_turn_pid(-8.5, 100);
   chassis.wait_drive();
 
-  flywheel.move_voltage(10600);
+  flywheel.move_voltage(12000);
 
-  pros::delay(1650);
+  pros::delay(2500);
 
   indexerSingle.set_value(true);
-  pros::delay(100);
+  pros::delay(10);
   indexerSingle.set_value(false);
-  pros::delay(750);
+  pros::delay(1000);
   indexerSingle.set_value(true);
-  pros::delay(100);
+  pros::delay(10);
   indexerSingle.set_value(false);
-  pros::delay(750);
+  pros::delay(1000);
 
   flywheel.brake();
 
@@ -546,9 +547,9 @@ void test_skills() { // programmers skills but the test version
   
   intake.move_voltage(12000);
 
-  chassis.set_drive_pid(27, 85);
+  chassis.set_drive_pid(29.5, 85);
   chassis.wait_drive();
-  chassis.set_turn_pid(335, 100);
+  chassis.set_turn_pid(320, 100);
   chassis.wait_drive();
   chassis.set_drive_pid(3, 85);
   chassis.wait_drive();
@@ -556,6 +557,8 @@ void test_skills() { // programmers skills but the test version
   pros::delay(1200);
   
   intake.brake();
+
+  // Step 5: shoot picked up disks
 
   flywheel.move_velocity(4700);
   pros::delay(1500);
@@ -583,4 +586,54 @@ void test_skills() { // programmers skills but the test version
   chassis.wait_drive();
   pros::delay(2000);
   intake.brake();
+
+  // Step 7: shoot picked up disks
+
+  chassis.set_turn_pid(-17, 80);
+  chassis.wait_drive();
+
+  flywheel.move_velocity(3250);
+  pros::delay(1500);
+
+  indexerSingle.set_value(true);
+  pros::delay(100);
+  indexerSingle.set_value(false);
+  pros::delay(750);
+  indexerSingle.set_value(true);
+  pros::delay(100);
+  indexerSingle.set_value(false);
+  pros::delay(750);
+  indexerSingle.set_value(true);
+  pros::delay(100);
+  indexerSingle.set_value(false);
+  pros::delay(750);
+
+  // Step 8: get line of disks on the other side
+
+  pros::delay(1000);
+  chassis.set_turn_pid(-90, 80);
+  chassis.
+  chassis.set_drive_pid(27, 110);
+
+
+  // Step 9: shoot picked up disks
+
+
+
+  // Step 10: head to other two rollers while picking up disks
+
+
+
+  // Step 11: shoot disks
+
+
+
+  // Step 12: get other two rollers
+
+
+
+  // Step 13: expand
+
+
+
 }

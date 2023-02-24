@@ -4,9 +4,9 @@
 void single_index(){
     if(master.get_digital(DIGITAL_L2)){
         indexerSingle.set_value(true);
-        pros::delay(5);
+        pros::delay(20);
         indexerSingle.set_value(false);
-        pros::delay(500);
+        pros::delay(150);
     }
     else{
         indexerSingle.set_value(false);
