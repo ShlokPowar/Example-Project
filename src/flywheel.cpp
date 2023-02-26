@@ -42,10 +42,6 @@ void toggle_flywheel(){
 //     }
 // }
 
-void flywheel_auto(int speed){
-    flywheel.move_velocity(speed);
-}
-
 void flywheelPID(double target){
     //Constants
     double kP = 0.3;

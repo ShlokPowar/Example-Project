@@ -275,7 +275,7 @@ void roller_side_normal() { // normal auton but with normal indexer
 
   chassis.set_turn_pid(-90.0, 110); // turn toward goal
 
-  flywheel.move_voltage(12000); 
+  set_flywheel_speed(12000); 
 
   indexer.set_value(true); // first disk
   pros::delay(500);
@@ -315,7 +315,7 @@ void roller_side_single() { // normal auton but with single indexer
 
   chassis.set_turn_pid(-45.0, 110); // turn toward goal
 
-  flywheel.move_voltage(12000); 
+  set_flywheel_speed(12000); 
 
   indexerSingle.set_value(true); // first disk
   pros::delay(500);
@@ -407,7 +407,7 @@ void skills() { // programmers skills
   chassis.set_turn_pid(-45.0, 110); // turn toward goal
   chassis.wait_drive();
 
-  flywheel.move_voltage(12000);
+  set_flywheel_speed(12000);
 
   pros::delay(750);
 
@@ -424,7 +424,7 @@ void skills() { // programmers skills
   indexerSingle.set_value(false);
 
   intake.brake();
-  flywheel.brake();
+  set_flywheel_speed(0);
 
   // Step 4
   chassis.set_turn_pid(-135.0, 110); // turn with intake facing other two rollers
@@ -489,6 +489,9 @@ void test_skills() { // programmers skills but the test version
   // 12. get other two rollers
   // 13. expand
 
+  // Initialize flywheel PID
+  pros::Task flywheel ([] {flywheelPID(0);});
+
   // Step 1: get roller
 
   intake.move_voltage(-12000); // do roller 1
@@ -506,7 +509,7 @@ void test_skills() { // programmers skills but the test version
   chassis.set_turn_pid(-8.5, 100);
   chassis.wait_drive();
 
-  flywheel.move_voltage(11200);
+  set_flywheel_speed(11200);
 
   pros::delay(2500);
 
@@ -519,7 +522,7 @@ void test_skills() { // programmers skills but the test version
   indexerSingle.set_value(false);
   pros::delay(1000);
 
-  flywheel.brake();
+  set_flywheel_speed(0);
 
   pros::delay(100);
 
@@ -560,7 +563,7 @@ void test_skills() { // programmers skills but the test version
 
   // Step 5: shoot picked up disks
 
-  flywheel.move_velocity(4650);
+  set_flywheel_speed(4650);
   pros::delay(1500);
 
   indexerSingle.set_value(true);
@@ -592,7 +595,7 @@ void test_skills() { // programmers skills but the test version
   chassis.set_turn_pid(-17, 80);
   chassis.wait_drive();
 
-  flywheel.move_velocity(3050);
+  set_flywheel_speed(3050);
   pros::delay(1500);
 
   indexerSingle.set_value(true);
@@ -631,7 +634,7 @@ void test_skills() { // programmers skills but the test version
 
   // Step 9: shoot picked up disks
 
-  flywheel.move_velocity(3250);
+  set_flywheel_speed(3250);
   pros::delay(1500);
 
   indexerSingle.set_value(true);
@@ -650,7 +653,7 @@ void test_skills() { // programmers skills but the test version
   // Step 10: get other two rollers
 
   pros::delay(1000);
-  flywheel.brake();
+  set_flywheel_speed(0);
 
   chassis.set_turn_pid(-182, 80);
   chassis.wait_drive();
