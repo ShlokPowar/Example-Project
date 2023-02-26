@@ -1,8 +1,8 @@
 #include "main.h"
 #include "headers.hpp"
 
-int volatesgsdsfa[4] = {0, 11250, 9975, 8500};
-int indexjidsofjd = 0;
+int rpms[4] = {0, 3240, 2916, 2700};
+int mode = 0;
 
 void toggle_flywheel(){
     
@@ -17,17 +17,17 @@ void toggle_flywheel(){
     // }
 
     if (master.get_digital_new_press(DIGITAL_X)) {
-        indexjidsofjd++;
-        if (indexjidsofjd == 4) {
-            indexjidsofjd = 0;
+        mode++;
+        if (mode == 4) {
+            mode = 0;
         }
     }
 
     if (master.get_digital_new_press(DIGITAL_Y)) {
-        indexjidsofjd = 0;
+        mode = 0;
     }
 
-    set_flywheel_speed(volatesgsdsfa[indexjidsofjd]);
+    set_flywheel_speed(rpms[mode]);
 }
 
 // void hold_flywheel(){
@@ -83,4 +83,5 @@ void set_flywheel_speed(int speed){
     if (pidTask != nullptr) {pidTask -> remove();}
 
     pidTask = (speed == -1) ? nullptr : std::make_unique<pros::Task>([=]{flywheelPID(speed);});
+    print_to_screen("what ");
 }
