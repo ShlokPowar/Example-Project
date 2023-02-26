@@ -17,6 +17,7 @@ void toggle_flywheel(){
     // }
 
     if (master.get_digital_new_press(DIGITAL_X)) {
+        ez::print_to_screen("sui");
         mode++;
         if (mode == 4) {
             mode = 0;
@@ -28,6 +29,7 @@ void toggle_flywheel(){
     }
 
     set_flywheel_speed(rpms[mode]);
+    ez::print_to_screen("PDLAE fdhsouif\n");
 }
 
 // void hold_flywheel(){
@@ -83,5 +85,4 @@ void set_flywheel_speed(int speed){
     if (pidTask != nullptr) {pidTask -> remove();}
 
     pidTask = (speed == -1) ? nullptr : std::make_unique<pros::Task>([=]{flywheelPID(speed);});
-    print_to_screen("what ");
 }
