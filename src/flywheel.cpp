@@ -45,6 +45,8 @@ void toggle_flywheel(){
 // }
 
 void flywheelPID(double target){
+    if (target == 0) { flywheel.brake(); }
+
     //Constants
     double kP = 0.3;
     double kV = 0.0354;

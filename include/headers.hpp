@@ -1,5 +1,5 @@
 //Intake
-static pros::Motor intake(3, MOTOR_GEARSET_18, false, MOTOR_ENCODER_DEGREES);
+static pros::Motor intake(3, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
 
 //indexers
 // static pros::ADIDigitalOut index1('C', false);

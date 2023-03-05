@@ -4,8 +4,9 @@
 int trigger = 0;
 
 void expand(){
-    if(master.get_digital_new_press(DIGITAL_RIGHT)){
+    if(master.get_digital(DIGITAL_RIGHT)){
         trigger++;
+        print_to_screen(to_string(trigger));
     }
     if(trigger >= 1000){
         expansion.set_value(true);
