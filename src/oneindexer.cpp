@@ -6,7 +6,7 @@ void single_index(){
         indexerSingle.set_value(true);
         pros::delay(20);
         indexerSingle.set_value(false);
-        pros::delay(150);
+        pros::delay(300);
     }
     else{
         indexerSingle.set_value(false);

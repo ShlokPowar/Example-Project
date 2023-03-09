@@ -275,7 +275,7 @@ void roller_side_normal() { // normal auton but with normal indexer
 
   chassis.set_turn_pid(-90.0, 110); // turn toward goal
 
-  set_flywheel_speed(12000); 
+  flywheel.move_voltage(12000); 
 
   indexer.set_value(true); // first disk
   pros::delay(500);
@@ -315,7 +315,7 @@ void roller_side_single() { // normal auton but with single indexer
 
   chassis.set_turn_pid(-45.0, 110); // turn toward goal
 
-  set_flywheel_speed(12000); 
+  flywheel.move_voltage(12000); 
 
   indexerSingle.set_value(true); // first disk
   pros::delay(500);
@@ -407,7 +407,7 @@ void skills() { // programmers skills
   chassis.set_turn_pid(-45.0, 110); // turn toward goal
   chassis.wait_drive();
 
-  set_flywheel_speed(12000);
+  flywheel.move_voltage(12000);
 
   pros::delay(750);
 
@@ -424,7 +424,7 @@ void skills() { // programmers skills
   indexerSingle.set_value(false);
 
   intake.brake();
-  set_flywheel_speed(0);
+  flywheel.move_voltage(0);
 
   // Step 4
   chassis.set_turn_pid(-135.0, 110); // turn with intake facing other two rollers
@@ -489,12 +489,9 @@ void test_skills() { // programmers skills but the test version
   // 12. get other two rollers
   // 13. expand
 
-  // Initialize flywheel PID
-  pros::Task flywheel ([] {flywheelPID(0);});
-
   // Step 1: get roller
 
-  intake.move_voltage(-12000); // do roller 1
+  intake.move_voltage(10000); // do roller 1
   chassis.set_drive_pid(2, 100); // engage roller
 
   pros::delay(500);
@@ -504,12 +501,12 @@ void test_skills() { // programmers skills but the test version
 
   // Step 2: shoot two disks
 
-  chassis.set_drive_pid(-9, 120);
+  chassis.set_drive_pid(-7, 120);
   chassis.wait_drive();
-  chassis.set_turn_pid(-8.5, 100);
+  chassis.set_turn_pid(-8.5, 25);
   chassis.wait_drive();
 
-  set_flywheel_speed(11200);
+  flywheel.move_voltage(11125);
 
   pros::delay(2500);
 
@@ -522,18 +519,18 @@ void test_skills() { // programmers skills but the test version
   indexerSingle.set_value(false);
   pros::delay(1000);
 
-  set_flywheel_speed(0);
+  flywheel.move_voltage(0);
 
   pros::delay(100);
 
   // Step 3: get second roller
 
-  chassis.set_turn_pid(90,110);
+  chassis.set_turn_pid(90, 80);
   chassis.wait_drive();
-  chassis.set_drive_pid(8, 120);
+  chassis.set_drive_pid(10, 120);
   chassis.wait_drive();
 
-  intake.move_voltage(-10000); // do roller
+  intake.move_voltage(10000); // do roller
   chassis.set_drive_pid(2, 100); // engage roller
 
   pros::delay(500);
@@ -545,16 +542,16 @@ void test_skills() { // programmers skills but the test version
 
   chassis.set_drive_pid(-8.25, 120);
   chassis.wait_drive();
-  chassis.set_turn_pid(225, 120);
+  chassis.set_turn_pid(225, 90);
   chassis.wait_drive();
   
   intake.move_voltage(12000);
 
   chassis.set_drive_pid(29.5, 85);
   chassis.wait_drive();
-  chassis.set_turn_pid(320, 100);
+  chassis.set_turn_pid(320, 90);
   chassis.wait_drive();
-  chassis.set_drive_pid(3, 85);
+  chassis.set_drive_pid(1, 85);
   chassis.wait_drive();
 
   pros::delay(1200);
@@ -563,9 +560,13 @@ void test_skills() { // programmers skills but the test version
 
   // Step 5: shoot picked up disks
 
-  set_flywheel_speed(4650);
+  flywheel.move_voltage(9500);
   pros::delay(1500);
 
+  indexerSingle.set_value(true);
+  pros::delay(100);
+  indexerSingle.set_value(false);
+  pros::delay(750);
   indexerSingle.set_value(true);
   pros::delay(100);
   indexerSingle.set_value(false);
@@ -577,25 +578,25 @@ void test_skills() { // programmers skills but the test version
 
   // Step 6: get line of disks to the front left of robot
 
-  chassis.set_turn_pid(135, 80);
+  chassis.set_turn_pid(135, 60);
   chassis.wait_drive();
   intake.move_voltage(12000);
   chassis.set_drive_pid(9, 110);
   chassis.wait_drive();
   pros::delay(1000);
-  chassis.set_turn_pid(47, 80);
+  chassis.set_turn_pid(45, 60);
   chassis.wait_drive();
-  chassis.set_drive_pid(17, 80);
+  chassis.set_drive_pid(18, 80);
   chassis.wait_drive();
   pros::delay(2000);
   intake.brake();
 
   // Step 7: shoot picked up disks
 
-  chassis.set_turn_pid(-17, 80);
+  chassis.set_turn_pid(-17, 25);
   chassis.wait_drive();
 
-  set_flywheel_speed(3050);
+  flywheel.move_voltage(10166);
   pros::delay(1500);
 
   indexerSingle.set_value(true);
@@ -616,7 +617,7 @@ void test_skills() { // programmers skills but the test version
   pros::delay(1000);
   chassis.set_turn_pid(-90, 80);
   chassis.wait_drive();
-  chassis.set_drive_pid(20, 110);
+  chassis.set_drive_pid(23, 110);
   intake.move_voltage(12000);
   chassis.wait_drive();
   pros::delay(1000);
@@ -629,12 +630,12 @@ void test_skills() { // programmers skills but the test version
 
   intake.brake();
 
-  chassis.set_turn_pid(-200, 80);
+  chassis.set_turn_pid(-275, 25);
   chassis.wait_drive();
 
   // Step 9: shoot picked up disks
 
-  set_flywheel_speed(3250);
+  flywheel.move_voltage(9000);
   pros::delay(1500);
 
   indexerSingle.set_value(true);
@@ -653,19 +654,34 @@ void test_skills() { // programmers skills but the test version
   // Step 10: get other two rollers
 
   pros::delay(1000);
-  set_flywheel_speed(0);
+  flywheel.move_voltage(0);
 
-  chassis.set_turn_pid(-182, 80);
+  chassis.set_turn_pid(-182, 25);
   chassis.wait_drive();
   chassis.set_drive_pid(10, 110);
   chassis.wait_drive();
-  chassis.set_turn_pid(-90, 80);
+  chassis.set_turn_pid(-90, 25);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(9, 120);
+  chassis.set_drive_pid(13, 120);
   chassis.wait_drive();
 
-  intake.move_voltage(-12000); // do roller
+  intake.move_voltage(12000); // do roller
+  chassis.set_drive_pid(2, 100); // engage roller
+
+  pros::delay(500);
+
+  intake.brake();
+  chassis.wait_drive();
+
+  chassis.set_drive_pid(-7, 120);
+  chassis.wait_drive();
+  chassis.set_turn_pid(-180, 25);
+  chassis.wait_drive();
+  chassis.set_drive_pid(13, 120);
+  chassis.wait_drive();
+
+  intake.move_voltage(12000); // do roller
   chassis.set_drive_pid(2, 100); // engage roller
 
   pros::delay(500);
@@ -675,23 +691,9 @@ void test_skills() { // programmers skills but the test version
 
   chassis.set_drive_pid(-9, 120);
   chassis.wait_drive();
-  chassis.set_turn_pid(-180, 80);
-  chassis.set_drive_pid(9, 120);
+  chassis.set_turn_pid(-135, 25);
   chassis.wait_drive();
-
-  intake.move_voltage(-12000); // do roller
-  chassis.set_drive_pid(2, 100); // engage roller
-
-  pros::delay(500);
-
-  intake.brake();
-  chassis.wait_drive();
-
-  chassis.set_drive_pid(-9, 120);
-  chassis.wait_drive();
-  chassis.set_turn_pid(-135, 90);
-  chassis.wait_drive();
-  chassis.set_drive_pid(4, 100);
+  chassis.set_drive_pid(7, 100);
   chassis.wait_drive();
 
   // Step 11: expand

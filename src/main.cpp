@@ -77,10 +77,10 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.add_autons({
-    // Auton("Roller side auton (normal indexer)\n\n", roller_side_normal),
-    // Auton("Roller side auton (single indexer)\n\n", roller_side_single),
-    // Auton("Not roller side auton\n\n", not_roller_side),
-    // Auton("Skills\n\n", skills),
+    Auton("Roller side auton (normal indexer)\n\n", roller_side_normal),
+    Auton("Roller side auton (single indexer)\n\n", roller_side_single),
+    Auton("Not roller side auton\n\n", not_roller_side),
+    Auton("Skills\n\n", skills),
     Auton("Skills (test)\n\n", test_skills)
   });
 
@@ -155,7 +155,7 @@ void autonomous() {
 void opcontrol() {
   // This is preference to what you like to drive on.
   chassis.set_drive_brake(MOTOR_BRAKE_COAST);
-  pros::Task flywheel ([] {flywheelPID(3400);});
+  //pros::Task flywheel ([] {flywheelPID(0);});
 
   while (true) {
 
