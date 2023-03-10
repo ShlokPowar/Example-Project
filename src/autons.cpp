@@ -250,44 +250,21 @@ void interfered_example() {
 // Make your own autonomous functions here!
 // . . .
 
-void roller_side_normal() { // normal auton but with normal indexer
-  // what this does is
-  // 1. get roller (should be started right in front of roller)
-  // 2. go to center
-  // 3. shoot disks with single indexer
-  //
-  // should have one disk in storage and the other in intake
+void not_roller_side() {
+  flywheel.move_voltage(11125);
 
-  intake.move_voltage(12000); // do rollers
-  chassis.set_drive_pid(2, 100); // move forward while intaking to keep contact with rollers
-  
-  pros::delay(500);
+  pros::delay(2500);
 
-  intake.brake();
-  chassis.wait_drive();
+  indexerSingle.set_value(true);
+  pros::delay(10);
+  indexerSingle.set_value(false);
+  pros::delay(1000);
+  indexerSingle.set_value(true);
+  pros::delay(10);
+  indexerSingle.set_value(false);
+  pros::delay(1000);
 
-  chassis.set_drive_pid(-6, 110); // go back
-  chassis.wait_drive();
-
-  chassis.set_turn_pid(45.0, 110); // turn 45 deg clockwise so the shooter faces the center of field
-                                   // if intake faces center of field then change this to -135 deg
-  chassis.set_drive_pid(-30, 110, true, true); // drive to center
-
-  chassis.set_turn_pid(-90.0, 110); // turn toward goal
-
-  flywheel.move_voltage(12000); 
-
-  indexer.set_value(true); // first disk
-  pros::delay(500);
-  indexer.set_value(false);
-
-  intake.move_voltage(12000); // move up second disk into storage
-
-  pros::delay(2500); // adjust if needed (its in ms)
-
-  indexer.set_value(true); // second disk
-  pros::delay(500);
-  indexer.set_value(false);
+  flywheel.move_voltage(0);
 }
 
 void roller_side_single() { // normal auton but with single indexer
@@ -298,7 +275,7 @@ void roller_side_single() { // normal auton but with single indexer
   //
   // should have one disk in storage and the other in intake
 
-  intake.move_voltage(12000); // do roller
+  intake.move_voltage(10000); // do roller 1
   chassis.set_drive_pid(2, 100); // engage roller
 
   pros::delay(500);
@@ -306,46 +283,55 @@ void roller_side_single() { // normal auton but with single indexer
   intake.brake();
   chassis.wait_drive();
 
-  chassis.set_drive_pid(-6, 110); // go back
+  chassis.set_drive_pid(-5, 120);
+  chassis.wait_drive();
+  chassis.set_turn_pid(-8.5, 25);
   chassis.wait_drive();
 
-  chassis.set_turn_pid(45.0, 110); // turn 45 deg clockwise so the shooter faces the center of field
-                                   // if intake faces center of field then change this to -135 deg
-  chassis.set_drive_pid(-30, 110, true, true); // drive to center
+  flywheel.move_voltage(11125);
 
-  chassis.set_turn_pid(-45.0, 110); // turn toward goal
+  pros::delay(2500);
 
-  flywheel.move_voltage(12000); 
-
-  indexerSingle.set_value(true); // first disk
-  pros::delay(500);
+  indexerSingle.set_value(true);
+  pros::delay(10);
   indexerSingle.set_value(false);
-
-  intake.move_voltage(12000); // move up second disk into storage
-
-  pros::delay(2500); // adjust if needed (its in ms)
-
-  indexerSingle.set_value(true); // second disk
-  pros::delay(500);
+  pros::delay(1000);
+  indexerSingle.set_value(true);
+  pros::delay(10);
   indexerSingle.set_value(false);
-}
+  pros::delay(1000);
 
-void not_roller_side() { // normal auton but for if you start on the side thats to the left of the roller
-  // what this does is
-  // 1. get roller (should be started FACING the roller)
+  flywheel.move_voltage(0);
 
-  chassis.set_drive_pid(20, 110);
+  chassis.set_turn_pid(-135, 80);
   chassis.wait_drive();
-  chassis.set_turn_pid(90.0, 100);
+  chassis.set_drive_pid(10, 80);
+  intake.move_voltage(12000);
+  chassis.wait_drive();
+
+  pros::delay(1500);
+
+  chassis.set_turn_pid(-225, 80);
   chassis.wait_drive();
   
-  intake.move_voltage(12000); // do rollers
-  chassis.set_drive_pid(2, 100); // move forward while intaking to keep contact with rollers
+  flywheel.move_voltage(11075);
 
-  pros::delay(500);
+  pros::delay(2500);
 
-  intake.brake();
-  chassis.wait_drive();
+  indexerSingle.set_value(true);
+  pros::delay(10);
+  indexerSingle.set_value(false);
+  pros::delay(1000);
+  indexerSingle.set_value(true);
+  pros::delay(10);
+  indexerSingle.set_value(false);
+  pros::delay(1000);
+  indexerSingle.set_value(true);
+  pros::delay(10);
+  indexerSingle.set_value(false);
+  pros::delay(1000);
+
+  flywheel.move_voltage(0);
 }
 
 void skills() { // programmers skills
@@ -501,7 +487,7 @@ void test_skills() { // programmers skills but the test version
 
   // Step 2: shoot two disks
 
-  chassis.set_drive_pid(-7, 120);
+  chassis.set_drive_pid(-4, 120);
   chassis.wait_drive();
   chassis.set_turn_pid(-8.5, 25);
   chassis.wait_drive();
@@ -525,12 +511,24 @@ void test_skills() { // programmers skills but the test version
 
   // Step 3: get second roller
 
+  intake.move_voltage(12000);
+
   chassis.set_turn_pid(90, 80);
   chassis.wait_drive();
-  chassis.set_drive_pid(10, 120);
+  chassis.set_drive_pid(5, 100);
   chassis.wait_drive();
+  pros::delay(500);
+  chassis.set_turn_pid(45, 80);
+  chassis.wait_drive();
+  chassis.set_drive_pid(5, 100);
+  chassis.wait_drive();
+  pros::delay(500);
+  chassis.set_drive_pid(-5, 100);
+  chassis.wait_drive();
+  chassis.set_turn_pid(90, 80);
+  chassis.wait_drive();
+  chassis.set_drive_pid(5, 100);
 
-  intake.move_voltage(10000); // do roller
   chassis.set_drive_pid(2, 100); // engage roller
 
   pros::delay(500);
@@ -538,17 +536,53 @@ void test_skills() { // programmers skills but the test version
   intake.brake();
   chassis.wait_drive();
 
+  chassis.set_drive_pid(-2, 80);
+  chassis.wait_drive();
+  chassis.set_turn_pid(-8.5, 70);
+  chassis.wait_drive();
+
+  flywheel.move_voltage(11100);
+  pros::delay(1000);
+  indexerSingle.set_value(true);
+  pros::delay(10);
+  indexerSingle.set_value(false);
+  pros::delay(1000);
+  indexerSingle.set_value(true);
+  pros::delay(10);
+  indexerSingle.set_value(false);
+  pros::delay(1000);
+
   // Step 4: move to center while picking up disks
 
-  chassis.set_drive_pid(-8.25, 120);
+  chassis.set_turn_pid(90, 80);
+  chassis.set_drive_pid(-5.25, 120);
   chassis.wait_drive();
   chassis.set_turn_pid(225, 90);
   chassis.wait_drive();
   
   intake.move_voltage(12000);
 
-  chassis.set_drive_pid(29.5, 85);
+  chassis.set_drive_pid(9, 85);
   chassis.wait_drive();
+  pros::delay(1000);
+  chassis.set_turn_pid(345, 80);
+  chassis.wait_drive();
+
+  flywheel.move_voltage(11100);
+  pros::delay(1000);
+  indexerSingle.set_value(true);
+  pros::delay(10);
+  indexerSingle.set_value(false);
+  pros::delay(1000);
+  indexerSingle.set_value(true);
+  pros::delay(10);
+  indexerSingle.set_value(false);
+  pros::delay(1000);
+  indexerSingle.set_value(true);
+  pros::delay(10);
+  indexerSingle.set_value(false);
+  pros::delay(1000);
+
   chassis.set_turn_pid(320, 90);
   chassis.wait_drive();
   chassis.set_drive_pid(1, 85);
